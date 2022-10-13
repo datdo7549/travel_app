@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">travel_app</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_login">Login</string>
+    <string name="text_create">Create</string>
+    <string name="text_create_account">Create account</string>
+    <string name="text_name">Name</string>
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_confirm_password">Confirm password</string>
+    <string name="text_have_account_login">Already have an account?</string>
+    <string name="text_no_account_login">Don\'t have an account yet?</string>
+    <string name="text_login_now">Login now</string>
+    <string name="text_register_now">Register now</string>
+</resources>

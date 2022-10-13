@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature.login.fragment.LoginFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/register_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_create_account"
+        android:textColor="@color/color_orange_1"
+        android:textSize="42sp"
+        android:fontFamily="@font/roboto_slab_bold"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        app:cardCornerRadius="10dp"
+        app:contentPaddingTop="40dp"
+        app:contentPaddingBottom="60dp"
+        app:contentPaddingLeft="20dp"
+        app:contentPaddingRight="20dp"
+        app:cardElevation="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/register_title">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="textEmailAddress"
+                android:hint="@string/text_name"
+                android:drawableRight="@drawable/ic_person"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_text_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="textEmailAddress"
+                android:hint="@string/text_email"
+                android:drawableRight="@drawable/ic_email"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:inputType="textPassword"
+                android:hint="@string/text_password"
+                android:drawableRight="@drawable/ic_key"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_text_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="@string/text_confirm_password"
+                android:drawableRight="@drawable/ic_key"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_create_account"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/text_create"
+        android:paddingHorizontal="60dp"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textColor="@color/color_white_1"
+        android:fontFamily="@font/roboto_slab_medium"
+        android:background="@drawable/bg_orange_round_25"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintStart_toStartOf="@id/card_view_holder"
+        app:layout_constraintEnd_toEndOf="@id/card_view_holder"
+        app:layout_constraintTop_toBottomOf="@id/card_view_holder"
+        app:layout_constraintBottom_toBottomOf="@+id/card_view_holder"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_create_account">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_slab_extra_bold"
+            android:text="@string/text_have_account_login"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_login_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/roboto_slab_extra_bold"
+            android:textColor="@color/color_red_1"
+            android:text="@string/text_login_now"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:elevation="-1dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_background_2"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
