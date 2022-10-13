@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -14,14 +16,13 @@ import com.example.travel_app.R;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentLoginBinding;
 
-public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
+import java.util.Objects;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragmentViewModel> {
     private NavController navController;
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public FragmentLoginBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -37,14 +38,33 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        viewBinding.btnLogin.setOnClickListener(v -> {
+        initView();
+        initViewModel();
+    }
 
-        });
+    private void initView() {
+        viewBinding.btnLogin.setOnClickListener(v -> viewModel.doLogin(
+                requireActivity(),
+                Objects.requireNonNull(viewBinding.editTextEmail.getText()).toString(),
+                Objects.requireNonNull(viewBinding.editTextPassword.getText()).toString()
+        ));
         viewBinding.btnGoogleLogin.setOnClickListener(v -> {
 
         });
-        viewBinding.btnRegisterNow.setOnClickListener(v -> {
-            navController.navigate(R.id.action_loginFragment_to_registerFragment);
+        viewBinding.btnRegisterNow.setOnClickListener(v -> navController.navigate(R.id.action_loginFragment_to_registerFragment));
+    }
+
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(this).get(LoginFragmentViewModel.class);
+        viewModel.loginStatus.observe(getViewLifecycleOwner(), loginStatus -> {
+            switch (loginStatus) {
+                case SUCCESS:
+                    Toast.makeText(requireContext(), "Login success", Toast.LENGTH_LONG).show();
+                    break;
+                case FAIL:
+                    Toast.makeText(requireContext(), "Login fail", Toast.LENGTH_LONG).show();
+                    break;
+            }
         });
     }
 }
