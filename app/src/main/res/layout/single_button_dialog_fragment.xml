@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="20dp"
+    android:background="@drawable/bg_dialog_round_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto_slab_extra_bold"
+        android:textSize="26sp"
+        android:text="Title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_view_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/roboto_slab_medium"
+        android:textSize="15sp"
+        android:text="Title"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:text="Ok"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_orange_round_25"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="20dp"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

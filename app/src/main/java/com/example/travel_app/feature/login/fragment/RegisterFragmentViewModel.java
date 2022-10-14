@@ -1,7 +1,8 @@
 package com.example.travel_app.feature.login.fragment;
 
+import static com.example.travel_app.core.extensions.StringExtension.validateRegisterData;
+
 import android.app.Activity;
-import android.util.Patterns;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,10 +25,11 @@ public class RegisterFragmentViewModel extends BaseViewModel {
     public LiveData<RegisterAccountStatus> registerStatus = _registerStatus;
 
     @Inject
-    public RegisterFragmentViewModel() {}
+    public RegisterFragmentViewModel() {
+    }
 
     public void createNewAccountWithEmail(Activity activity, String email, String password, String confirmPassword) {
-        if (validateData(email, password, confirmPassword)) {
+        if (validateRegisterData(email, password, confirmPassword)) {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(activity, task -> {
                         if (task.isSuccessful()) {
@@ -43,9 +45,5 @@ public class RegisterFragmentViewModel extends BaseViewModel {
         } else {
             _registerStatus.postValue(RegisterAccountStatus.WRONG_FORMAT);
         }
-    }
-
-    public boolean validateData(String email, String password, String confirmPassword) {
-        return (Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length() > 8 && password.equals(confirmPassword));
     }
 }

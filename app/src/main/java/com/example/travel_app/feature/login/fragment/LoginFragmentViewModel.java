@@ -9,6 +9,8 @@ import com.example.travel_app.core.platform.BaseViewModel;
 import com.example.travel_app.feature.login.model.LoginStatus;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.travel_app.core.extensions.StringExtension.validateLoginData;
+
 import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
@@ -24,15 +26,21 @@ public class LoginFragmentViewModel extends BaseViewModel {
     public LoginFragmentViewModel() {
     }
 
-    public void doLogin(Activity activity, String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(activity, task -> {
-                    if (task.isSuccessful()) {
-                        _loginStatus.postValue(LoginStatus.SUCCESS);
-                    } else {
-                        _loginStatus.postValue(LoginStatus.FAIL);
-                    }
-                });
+    public void doLoginWithEmailAndPassword(Activity activity, String email, String password) {
+        if (validateLoginData(email, password)) {
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(activity, task -> {
+                        if (task.isSuccessful()) {
+                            _loginStatus.postValue(LoginStatus.SUCCESS);
+                        } else {
+                            _loginStatus.postValue(LoginStatus.FAIL);
+                        }
+                    });
+        } else {
+            _loginStatus.postValue(LoginStatus.WRONG_FORMAT);
+        }
 
     }
+
+
 }

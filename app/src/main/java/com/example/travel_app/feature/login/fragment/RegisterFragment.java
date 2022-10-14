@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,8 +12,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.travel_app.R;
+import com.example.travel_app.core.dialog.SingleButtonDialogFragment;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentRegisterBinding;
+import com.example.travel_app.feature.login.model.RegisterAccountStatus;
 
 import java.util.Objects;
 
@@ -23,6 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, RegisterFragmentViewModel> {
     private NavController navController;
+
+    private SingleButtonDialogFragment singleButtonDialogFragment;
 
     @Override
     public FragmentRegisterBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -56,17 +59,37 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Regi
         viewModel.registerStatus.observe(getViewLifecycleOwner(), registerAccountStatus -> {
             switch (registerAccountStatus) {
                 case SUCCESS:
-                    Toast.makeText(requireContext(), "Create account success", Toast.LENGTH_LONG).show();
+                    singleButtonDialogFragment = new SingleButtonDialogFragment(
+                            getChildFragmentManager(),
+                            RegisterAccountStatus.SUCCESS.getTitle(),
+                            RegisterAccountStatus.SUCCESS.getDescription()
+                    );
+                    singleButtonDialogFragment.show(RegisterAccountStatus.SUCCESS.getTitle());
                     navController.navigate(R.id.action_registerFragment_to_loginFragment);
                     break;
                 case FAIL:
-                    Toast.makeText(requireContext(), "Create account fail", Toast.LENGTH_LONG).show();
+                    singleButtonDialogFragment = new SingleButtonDialogFragment(
+                            getChildFragmentManager(),
+                            RegisterAccountStatus.FAIL.getTitle(),
+                            RegisterAccountStatus.FAIL.getDescription()
+                    );
+                    singleButtonDialogFragment.show(RegisterAccountStatus.FAIL.getTitle());
                     break;
                 case WRONG_FORMAT:
-                    Toast.makeText(requireContext(), "Wrong format of email or password", Toast.LENGTH_LONG).show();
+                    singleButtonDialogFragment = new SingleButtonDialogFragment(
+                            getChildFragmentManager(),
+                            RegisterAccountStatus.WRONG_FORMAT.getTitle(),
+                            RegisterAccountStatus.WRONG_FORMAT.getDescription()
+                    );
+                    singleButtonDialogFragment.show(RegisterAccountStatus.WRONG_FORMAT.getTitle());
                     break;
                 case DUPLICATE_ACCOUNT:
-                    Toast.makeText(requireContext(), "Account existed", Toast.LENGTH_LONG).show();
+                    singleButtonDialogFragment = new SingleButtonDialogFragment(
+                            getChildFragmentManager(),
+                            RegisterAccountStatus.DUPLICATE_ACCOUNT.getTitle(),
+                            RegisterAccountStatus.DUPLICATE_ACCOUNT.getDescription()
+                    );
+                    singleButtonDialogFragment.show(RegisterAccountStatus.DUPLICATE_ACCOUNT.getTitle());
                     break;
             }
         });

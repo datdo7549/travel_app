@@ -85,15 +85,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_google_login"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_google"
-        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_view_or"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_or"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
