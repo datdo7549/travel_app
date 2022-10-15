@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.travel_app.MainActivity;
 import com.example.travel_app.R;
 import com.example.travel_app.core.dialog.SingleButtonDialogFragment;
 import com.example.travel_app.core.platform.BaseFragment;
@@ -89,7 +90,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragm
         viewModel.loginStatus.observe(getViewLifecycleOwner(), loginStatus -> {
             switch (loginStatus) {
                 case SUCCESS:
-                    showResultDialog(LoginStatus.SUCCESS);
+                    MainActivity.start(requireContext());
                     break;
                 case FAIL:
                     showResultDialog(LoginStatus.FAIL);
@@ -150,7 +151,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragm
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(requireActivity(), task -> {
                     if (task.isSuccessful()) {
-
+                        MainActivity.start(requireContext());
                     } else {
                         showResultDialog(LoginStatus.FAIL);
                     }
