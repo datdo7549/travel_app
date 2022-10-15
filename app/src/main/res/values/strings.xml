@@ -13,4 +13,17 @@
     <string name="text_no_account_login">Don\'t have an account yet?</string>
     <string name="text_login_now">Login now</string>
     <string name="text_register_now">Register now</string>
+
+    <string name="img_cover_sample">https://images.unsplash.com/photo-1665731372442-a9d2e251af28?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1170&amp;q=80</string>
+    <string name="img_avatar_sample">https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=880&amp;q=80</string>
+    <string name="img_user_post_img_cover">https://images.unsplash.com/photo-1665501340269-5ced49f91a92?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1074&amp;q=80</string>
+    
+    <string name="text_user_name_sample">Rocky Balboa</string>
+    <string name="text_user_email_sample">rocky7549@gmail.com</string>
+    <string name="text_post">Posts</string>
+    <string name="text_posts_count_sample">100</string>
+    <string name="text_friends">Friends</string>
+    <string name="text_friends_count_sample">62</string>
+    <string name="text_your_posts">Your posts</string>
+    <string name="text_see_all">See all</string>
 </resources>
