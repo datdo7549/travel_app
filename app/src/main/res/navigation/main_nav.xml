@@ -14,5 +14,27 @@
         android:id="@+id/profileFragment"
         android:name="com.example.travel_app.feature.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_profileSettingsFragment"
+            app:destination="@id/profileSettingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileSettingsFragment"
+        android:name="com.example.travel_app.feature.profile.ProfileSettingsFragment"
+        android:label="fragment_profile_settings"
+        tools:layout="@layout/fragment_profile_settings" >
+        <action
+            android:id="@+id/action_profileSettingsFragment_to_updateProfileFragment"
+            app:destination="@id/updateProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateProfileFragment"
+        android:name="com.example.travel_app.feature.profile.UpdateProfileFragment"
+        android:label="fragment_update_profile"
+        tools:layout="@layout/fragment_update_profile" >
+        <action
+            android:id="@+id/action_updateProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

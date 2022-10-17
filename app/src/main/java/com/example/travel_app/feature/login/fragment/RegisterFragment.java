@@ -1,5 +1,10 @@
 package com.example.travel_app.feature.login.fragment;
 
+import static com.example.travel_app.feature.login.model.RegisterAccountStatus.DUPLICATE_ACCOUNT;
+import static com.example.travel_app.feature.login.model.RegisterAccountStatus.FAIL;
+import static com.example.travel_app.feature.login.model.RegisterAccountStatus.SUCCESS_BUT_UPDATE_PROFILE_ERROR;
+import static com.example.travel_app.feature.login.model.RegisterAccountStatus.WRONG_FORMAT;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.travel_app.MainActivity;
 import com.example.travel_app.R;
-import com.example.travel_app.core.dialog.SingleButtonDialogFragment;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentRegisterBinding;
 import com.example.travel_app.feature.login.model.RegisterAccountStatus;
@@ -24,8 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, RegisterFragmentViewModel> {
     private NavController navController;
-
-    private SingleButtonDialogFragment singleButtonDialogFragment;
 
     @Override
     public FragmentRegisterBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -59,38 +62,29 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Regi
         viewModel.registerStatus.observe(getViewLifecycleOwner(), registerAccountStatus -> {
             switch (registerAccountStatus) {
                 case SUCCESS:
-                    singleButtonDialogFragment = new SingleButtonDialogFragment(
-                            getChildFragmentManager(),
-                            RegisterAccountStatus.SUCCESS.getTitle(),
-                            RegisterAccountStatus.SUCCESS.getDescription()
-                    );
-                    singleButtonDialogFragment.show(RegisterAccountStatus.SUCCESS.getTitle());
-                    navController.navigate(R.id.action_registerFragment_to_loginFragment);
+                    showResultDialog(RegisterAccountStatus.SUCCESS, () -> MainActivity.start(requireContext()));
+                    break;
+                case SUCCESS_BUT_UPDATE_PROFILE_ERROR:
+                    showResultDialog(SUCCESS_BUT_UPDATE_PROFILE_ERROR, () -> MainActivity.start(requireContext()));
+                    MainActivity.start(requireContext());
                     break;
                 case FAIL:
-                    singleButtonDialogFragment = new SingleButtonDialogFragment(
-                            getChildFragmentManager(),
-                            RegisterAccountStatus.FAIL.getTitle(),
-                            RegisterAccountStatus.FAIL.getDescription()
-                    );
-                    singleButtonDialogFragment.show(RegisterAccountStatus.FAIL.getTitle());
+                    showResultDialog(FAIL);
                     break;
                 case WRONG_FORMAT:
-                    singleButtonDialogFragment = new SingleButtonDialogFragment(
-                            getChildFragmentManager(),
-                            RegisterAccountStatus.WRONG_FORMAT.getTitle(),
-                            RegisterAccountStatus.WRONG_FORMAT.getDescription()
-                    );
-                    singleButtonDialogFragment.show(RegisterAccountStatus.WRONG_FORMAT.getTitle());
+                    showResultDialog(WRONG_FORMAT);
                     break;
                 case DUPLICATE_ACCOUNT:
-                    singleButtonDialogFragment = new SingleButtonDialogFragment(
-                            getChildFragmentManager(),
-                            RegisterAccountStatus.DUPLICATE_ACCOUNT.getTitle(),
-                            RegisterAccountStatus.DUPLICATE_ACCOUNT.getDescription()
-                    );
-                    singleButtonDialogFragment.show(RegisterAccountStatus.DUPLICATE_ACCOUNT.getTitle());
+                    showResultDialog(DUPLICATE_ACCOUNT);
                     break;
+            }
+        });
+
+        viewModel.loading.observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) {
+                progressDialog.show();
+            } else {
+                progressDialog.hide();
             }
         });
     }

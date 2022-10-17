@@ -17,37 +17,24 @@ import androidx.navigation.Navigation;
 
 import com.example.travel_app.MainActivity;
 import com.example.travel_app.R;
-import com.example.travel_app.core.dialog.SingleButtonDialogFragment;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentLoginBinding;
 import com.example.travel_app.feature.login.model.LoginStatus;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
-
-import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragmentViewModel> implements GoogleApiClient.OnConnectionFailedListener {
     private NavController navController;
-
-    @Inject
-    GoogleSignInOptions googleSignInOptions;
-    @Inject
-    FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private GoogleApiClient googleApiClient;
 
     @Override
     public FragmentLoginBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
@@ -65,7 +52,6 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragm
         navController = Navigation.findNavController(view);
         initView();
         initViewModel();
-        initGoogleSignIn();
     }
 
     private void initView() {
@@ -75,21 +61,18 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragm
                         Objects.requireNonNull(viewBinding.editTextEmail.getText()).toString(),
                         Objects.requireNonNull(viewBinding.editTextPassword.getText()).toString()
                 ));
-        viewBinding.btnGoogleLogin.setOnClickListener(v -> {
-            Intent googleSignInApiSignInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-            if (googleApiClient != null && googleApiClient.isConnected()) {
-                googleApiClient.clearDefaultAccountAndReconnect();
-            }
-            googleSignInResultLauncher.launch(googleSignInApiSignInIntent);
-        });
+        viewBinding.btnGoogleLogin.setOnClickListener(v -> viewModel.doLoginWithGoogleAccount(googleSignInResultLauncher));
         viewBinding.btnRegisterNow.setOnClickListener(v -> navController.navigate(R.id.action_loginFragment_to_registerFragment));
     }
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(LoginFragmentViewModel.class);
+        viewModel.initGoogleSignIn(requireActivity(), this);
         viewModel.loginStatus.observe(getViewLifecycleOwner(), loginStatus -> {
             switch (loginStatus) {
                 case SUCCESS:
+                case GOOGLE_SIGN_IN_SUCCESS:
+                case GOOGLE_SIGN_IN_AUTO_LOG_IN:
                     MainActivity.start(requireContext());
                     break;
                 case FAIL:
@@ -100,23 +83,14 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragm
                     break;
             }
         });
-    }
 
-    private void initGoogleSignIn() {
-        googleApiClient = new GoogleApiClient.Builder(requireContext())
-                .enableAutoManage(requireActivity(), this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-                .build();
-
-        authStateListener = firebaseAuth -> {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) {
-                //Already have user
-                Toast.makeText(requireContext(), "Already have an account", Toast.LENGTH_LONG).show();
+        viewModel.loading.observe(getViewLifecycleOwner(), isLoading -> {
+            if (isLoading) {
+                progressDialog.show();
             } else {
-                Toast.makeText(requireContext(), "No account logged in", Toast.LENGTH_LONG).show();
+                progressDialog.hide();
             }
-        };
+        });
     }
 
     @Override
@@ -140,45 +114,16 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginFragm
             if (account != null) {
                 String idToken = account.getIdToken();
                 AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-                firebaseAuthWithGoogle(credential);
+                viewModel.firebaseAuthWithGoogle(requireActivity(), credential);
             }
         } else {
             showResultDialog(LoginStatus.FAIL);
         }
     }
 
-    private void firebaseAuthWithGoogle(AuthCredential credential) {
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(requireActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        MainActivity.start(requireContext());
-                    } else {
-                        showResultDialog(LoginStatus.FAIL);
-                    }
-                });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
-    }
-
     @Override
     public void onPause() {
         super.onPause();
-        FirebaseAuth.getInstance().signOut();
-        firebaseAuth.removeAuthStateListener(authStateListener);
-        googleApiClient.stopAutoManage(requireActivity());
-        googleApiClient.disconnect();
-    }
-
-    private void showResultDialog(LoginStatus loginStatus) {
-        SingleButtonDialogFragment singleButtonDialogFragment = new SingleButtonDialogFragment(
-                getChildFragmentManager(),
-                loginStatus.getTitle(),
-                loginStatus.getDescription()
-        );
-        singleButtonDialogFragment.show(loginStatus.getTitle());
+        viewModel.removeAuthStateListener(requireActivity());
     }
 }

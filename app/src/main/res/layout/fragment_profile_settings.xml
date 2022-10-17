@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature.profile.ProfileSettingsFragment">
+
+   <com.example.travel_app.core.views.TravelAppToolBar
+       android:id="@+id/tool_bar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
+       app:tool_bar_title="@string/text_profile_settings"/>
+
+   <androidx.appcompat.widget.LinearLayoutCompat
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       android:orientation="vertical"
+       app:layout_constraintTop_toBottomOf="@+id/tool_bar">
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/ln_update_profile"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+         <androidx.appcompat.widget.AppCompatTextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:fontFamily="@font/roboto_slab_medium"
+             android:textColor="@color/black"
+             android:layout_margin="20dp"
+             android:text="@string/update_profile"/>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/color_grey_2"/>
+
+      <androidx.appcompat.widget.LinearLayoutCompat
+          android:id="@+id/ln_sign_out"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+         <androidx.appcompat.widget.AppCompatTextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:fontFamily="@font/roboto_slab_medium"
+             android:textColor="@color/black"
+             android:layout_margin="20dp"
+             android:text="@string/text_log_out"/>
+      </androidx.appcompat.widget.LinearLayoutCompat>
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/color_grey_2"/>
+   </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

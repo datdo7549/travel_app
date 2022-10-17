@@ -8,6 +8,10 @@ public class StringExtension {
     }
 
     public static boolean validateLoginData(String email, String password) {
-        return (Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length() > 8 );
+        return (Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length() > 8);
+    }
+
+    public static boolean validateUpdateProfileData(String name, String phoneNumber, Long birthday, String address) {
+        return (!name.equals("") && !phoneNumber.equals("") && birthday != 0L && !address.equals(""));
     }
 }
