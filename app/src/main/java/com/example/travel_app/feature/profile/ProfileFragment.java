@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -21,6 +23,10 @@ import com.example.travel_app.feature.profile.adapter.UserPostAdapter;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileFragmentViewModel> {
     private UserPostAdapter userPostAdapter;
+    private UserPostAdapter userFavoritePostAdapter;
+
+    private NavController navController;
+
     @Override
     public FragmentProfileBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentProfileBinding.inflate(inflater, container, false);
@@ -29,6 +35,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
         initView();
         initViewModel();
     }
@@ -45,18 +52,20 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
                 .into(viewBinding.imgAvatar);
 
         userPostAdapter = new UserPostAdapter();
+        userFavoritePostAdapter = new UserPostAdapter();
+
         viewBinding.recyclerViewUserPosts.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         viewBinding.recyclerViewUserPosts.setAdapter(userPostAdapter);
+
+        viewBinding.recyclerViewUserFavoritePosts.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        viewBinding.recyclerViewUserFavoritePosts.setAdapter(userFavoritePostAdapter);
+
+        viewBinding.btnSettings.setOnClickListener( v -> navController.navigate(R.id.action_profileFragment_to_profileSettingsFragment));
     }
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
         viewModel.userPosts.observe(getViewLifecycleOwner(), userPosts -> userPostAdapter.submitList(userPosts));
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
+        viewModel.userFavoritePosts.observe(getViewLifecycleOwner(), userFavoritePosts -> userFavoritePostAdapter.submitList(userFavoritePosts));
     }
 }

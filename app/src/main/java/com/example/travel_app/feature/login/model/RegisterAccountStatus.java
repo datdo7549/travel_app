@@ -1,29 +1,35 @@
 package com.example.travel_app.feature.login.model;
 
-public enum RegisterAccountStatus {
+import com.example.travel_app.core.platform.BaseEnum;
+
+public enum RegisterAccountStatus implements BaseEnum {
     SUCCESS(1, "Register", "Create account successful"),
     FAIL(0, "Register", "Create account failed"),
     WRONG_FORMAT(2, "Register", "Please insert valid email or password"),
-    DUPLICATE_ACCOUNT(3, "Register", "Account exists");
+    DUPLICATE_ACCOUNT(3, "Register", "Account exists"),
+    SUCCESS_BUT_UPDATE_PROFILE_ERROR(4, "Register", "Update profile error");
 
-    private int status;
-    private String title;
-    private String description;
+    private final int status;
+    private final String title;
+    private final String description;
+
     RegisterAccountStatus(int status, String title, String description) {
         this.status = status;
         this.title = title;
         this.description = description;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public int getStatus() {
+        return this.status;
+    }
+
+    @Override
+    public String getTitle() {
+        return this.title;
     }
 }

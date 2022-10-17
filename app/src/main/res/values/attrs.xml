@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TravelAppToolBar">
+        <attr name="tool_bar_background" format="reference|color"/>
+        <attr name="tool_bar_title" format="string"/>
+    </declare-styleable>
+</resources>

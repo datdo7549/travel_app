@@ -5,6 +5,8 @@ import android.content.Context;
 import com.example.travel_app.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
 
@@ -30,5 +32,11 @@ public class NetworkModule {
                 .requestIdToken(context.getString(R.string.web_client_id))
                 .requestEmail()
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    public DatabaseReference profileFirebaseDatabase() {
+        return FirebaseDatabase.getInstance().getReference();
     }
 }

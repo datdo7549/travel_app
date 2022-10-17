@@ -12,6 +12,9 @@ import androidx.navigation.ui.NavigationUI;
 import com.example.travel_app.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     public static void start(Context context) {
