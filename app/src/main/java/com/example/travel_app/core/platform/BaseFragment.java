@@ -14,9 +14,7 @@ import androidx.viewbinding.ViewBinding;
 
 import com.example.travel_app.R;
 import com.example.travel_app.core.dialog.SingleButtonDialogFragment;
-import com.example.travel_app.core.listeners.RegisterAccountButtonListener;
-import com.example.travel_app.feature.login.model.LoginStatus;
-import com.example.travel_app.feature.login.model.RegisterAccountStatus;
+import com.example.travel_app.core.listeners.DialogButtonClickListener;
 
 public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel> extends Fragment {
     public VB viewBinding;
@@ -50,13 +48,13 @@ public abstract class BaseFragment<VB extends ViewBinding, VM extends ViewModel>
         singleButtonDialogFragment.show(status.getTitle());
     }
 
-    public void showResultDialog(BaseEnum status, RegisterAccountButtonListener registerAccountButtonListener) {
+    public void showResultDialog(BaseEnum status, DialogButtonClickListener dialogButtonClickListener) {
         SingleButtonDialogFragment singleButtonDialogFragment = new SingleButtonDialogFragment(
                 getChildFragmentManager(),
                 status.getTitle(),
                 status.getDescription()
         );
         singleButtonDialogFragment.show(status.getTitle());
-        singleButtonDialogFragment.setRegisterAccountButtonListener(registerAccountButtonListener);
+        singleButtonDialogFragment.setRegisterAccountButtonListener(dialogButtonClickListener);
     }
 }

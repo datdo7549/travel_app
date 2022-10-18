@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.travel_app.core.Const;
 import com.example.travel_app.core.platform.BaseViewModel;
 import com.example.travel_app.feature.login.model.RegisterAccountStatus;
 import com.example.travel_app.feature.profile.model.UserProfile;
@@ -63,8 +64,9 @@ public class RegisterFragmentViewModel extends BaseViewModel {
     }
 
     private void createUserProfileOnDatabase(String uuid) {
-        UserProfile userProfile = new UserProfile(uuid);
-        firebaseDatabase.child("UserProfile").child(uuid).setValue(userProfile).addOnCompleteListener(task_2 -> {
+        String email = firebaseAuth.getCurrentUser().getEmail();
+        UserProfile userProfile = new UserProfile(uuid, email);
+        firebaseDatabase.child(Const.USER_PROFILE).child(uuid).setValue(userProfile).addOnCompleteListener(task_2 -> {
             _loading.postValue(false);
             if (task_2.isComplete()) {
                 _registerStatus.postValue(SUCCESS);

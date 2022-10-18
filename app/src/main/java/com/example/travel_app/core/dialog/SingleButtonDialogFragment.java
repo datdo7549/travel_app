@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.travel_app.core.listeners.RegisterAccountButtonListener;
+import com.example.travel_app.core.listeners.DialogButtonClickListener;
 import com.example.travel_app.databinding.SingleButtonDialogFragmentBinding;
 
 import java.util.Objects;
@@ -21,7 +21,7 @@ public class SingleButtonDialogFragment extends DialogFragment {
     private final FragmentManager fragmentManager;
     private final String title, description;
 
-    private RegisterAccountButtonListener registerAccountButtonListener = null;
+    private DialogButtonClickListener dialogButtonClickListener = null;
 
     public SingleButtonDialogFragment(FragmentManager fragmentManager, String title, String description) {
         this.fragmentManager = fragmentManager;
@@ -47,12 +47,12 @@ public class SingleButtonDialogFragment extends DialogFragment {
         viewBinding.textViewDescription.setText(description);
         viewBinding.btnCancel.setOnClickListener(v -> {
             dismiss();
-            if (registerAccountButtonListener != null) registerAccountButtonListener.onButtonClick();
+            if (dialogButtonClickListener != null) dialogButtonClickListener.onCLick();
         });
     }
 
-    public void setRegisterAccountButtonListener(RegisterAccountButtonListener registerAccountButtonListener) {
-        this.registerAccountButtonListener = registerAccountButtonListener;
+    public void setRegisterAccountButtonListener(DialogButtonClickListener dialogButtonClickListener) {
+        this.dialogButtonClickListener = dialogButtonClickListener;
     }
 
     public void show(String tag) {
