@@ -44,6 +44,7 @@ public class UpdateProfileFragment extends BaseFragment<FragmentUpdateProfileBin
     final Calendar myCalendar = Calendar.getInstance();
 
     private void initView() {
+        viewBinding.toolBar.setButtonBackListener(() -> navController.navigateUp());
         DatePickerDialog.OnDateSetListener date = (view, year, month, day) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, month);
@@ -69,7 +70,7 @@ public class UpdateProfileFragment extends BaseFragment<FragmentUpdateProfileBin
         viewModel = new ViewModelProvider(this).get(UpdateProfileFragmentViewModel.class);
         viewModel.updateProfile.observe(getViewLifecycleOwner(), isSuccess -> {
             if (isSuccess == UpdateProfileStatus.UPDATE_PROFILE_SUCCESS) {
-                navController.navigate(R.id.action_updateProfileFragment_to_profileFragment);
+                showResultDialog(UpdateProfileStatus.UPDATE_PROFILE_SUCCESS, () -> navController.navigate(R.id.action_updateProfileFragment_to_profileFragment));
             } else {
                 showResultDialog(UpdateProfileStatus.UPDATE_PROFILE_FAIL);
             }

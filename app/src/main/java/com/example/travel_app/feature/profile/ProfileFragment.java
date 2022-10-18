@@ -1,26 +1,26 @@
 package com.example.travel_app.feature.profile;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentProfileBinding;
-import com.example.travel_app.feature.login.fragment.LoginFragmentViewModel;
 import com.example.travel_app.feature.profile.adapter.UserPostAdapter;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileFragmentViewModel> {
     private UserPostAdapter userPostAdapter;
     private UserPostAdapter userFavoritePostAdapter;
@@ -65,7 +65,20 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(ProfileFragmentViewModel.class);
+        viewModel.getUserProfile();
         viewModel.userPosts.observe(getViewLifecycleOwner(), userPosts -> userPostAdapter.submitList(userPosts));
         viewModel.userFavoritePosts.observe(getViewLifecycleOwner(), userFavoritePosts -> userFavoritePostAdapter.submitList(userFavoritePosts));
+        viewModel.userProfile.observe(getViewLifecycleOwner(), userProfile -> {
+            if (userProfile != null) {
+                if (!userProfile.name.equals("")) {
+                    viewBinding.userNameTextView.setText(userProfile.name);
+                } else {
+                    viewBinding.userNameTextView.setText(getResources().getString(R.string.text_name_place_holder));
+                }
+                viewBinding.userEmailTextView.setText(userProfile.email);
+            } else {
+                viewBinding.userNameTextView.setText(getResources().getString(R.string.text_name_place_holder));
+            }
+        });
     }
 }
