@@ -36,6 +36,10 @@ public class TravelAppToolBar extends ConstraintLayout {
         TypedArray typedArray = this.getContext().obtainStyledAttributes(attrs, R.styleable.TravelAppToolBar);
         try {
             String title = typedArray.getString(R.styleable.TravelAppToolBar_tool_bar_title);
+            boolean isVisibleButtonBack = typedArray.getBoolean(R.styleable.TravelAppToolBar_tool_bar_is_visible_button_back, false);
+            if (isVisibleButtonBack) {
+                binding.btnBack.setVisibility(INVISIBLE);
+            }
             binding.toolBarTitle.setText(title);
         } finally {
             typedArray.recycle();

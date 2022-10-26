@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature.explore.PostDetailFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="2dp"
+        android:layout_margin="20dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_post_cover"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@color/color_orange_1"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-30dp"
+                android:padding="20dp"
+                android:background="@drawable/bg_white_round_top_25"
+                app:layout_constraintTop_toBottomOf="@+id/img_post_cover">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_view_post_location"
+                    android:text="New York, USA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_slab_extra_bold"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bg_selection_favorite_2"
+                   app:layout_constraintTop_toTopOf="@+id/text_view_post_location"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_post_location"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_view_post_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_slab_medium"
+                    android:lineSpacingExtra="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_post_location"
+                    android:text="@string/text_post_description_holder"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_view_post_location_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/roboto_slab_medium"
+                    android:lineSpacingExtra="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_post_description"
+                    android:text="Location: 20 New York, NY city, USA."/>
+
+                <TextView
+                    android:id="@+id/text_view_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="20 likes"
+                    android:fontFamily="@font/roboto_slab_extra_bold"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_post_location_map"/>
+
+                <TextView
+                    android:id="@+id/text_view_comments_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 comments"
+                    android:fontFamily="@font/roboto_slab_extra_bold"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    app:layout_constraintTop_toTopOf="@+id/text_view_like_count"
+                    app:layout_constraintBottom_toBottomOf="@id/text_view_like_count"
+                    app:layout_constraintStart_toEndOf="@id/text_view_like_count"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="03/06/2022"
+                    android:textStyle="italic"
+                    android:fontFamily="@font/roboto_slab_medium"
+                    app:layout_constraintTop_toTopOf="@+id/text_view_like_count"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_view_like_count"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <EditText
+                    android:id="@+id/edit_create_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:paddingHorizontal="10dp"
+                    android:fontFamily="@font/roboto_slab_medium"
+                    android:textSize="15sp"
+                    android:hint="@string/text_comment"
+                    android:drawableRight="@drawable/ic_arrow_up"
+                    android:background="@drawable/bg_comment_round_20"
+                    app:layout_constraintTop_toBottomOf="@+id/text_view_like_count"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

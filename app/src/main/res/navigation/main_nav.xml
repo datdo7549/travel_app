@@ -9,7 +9,11 @@
         android:id="@+id/exploreFragment"
         android:name="com.example.travel_app.feature.explore.ExploreFragment"
         android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_exploreFragment_to_postDetailFragment"
+            app:destination="@id/postDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.travel_app.feature.profile.ProfileFragment"
@@ -36,5 +40,15 @@
         <action
             android:id="@+id/action_updateProfileFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.travel_app.feature.explore.PostDetailFragment"
+        android:label="fragment_post_detail"
+        tools:layout="@layout/fragment_post_detail">
+        <argument
+            android:name="postId"
+            android:defaultValue="1"
+            app:argType="string"/>
     </fragment>
 </navigation>

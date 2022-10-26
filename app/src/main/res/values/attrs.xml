@@ -3,5 +3,6 @@
     <declare-styleable name="TravelAppToolBar">
         <attr name="tool_bar_background" format="reference|color"/>
         <attr name="tool_bar_title" format="string"/>
+        <attr name="tool_bar_is_visible_button_back" format="boolean"/>
     </declare-styleable>
 </resources>
