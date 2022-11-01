@@ -42,4 +42,7 @@
     <string name="text_post_description_holder">Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendre rit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspend isse sagittis metus enim.</string>
     <string name="text_comment">Write comment here</string>
     <string name="text_comment_title">Comments</string>
+    <string name="text_create_post">Create new post</string>
+    <string name="text_post_title">Post title</string>
+    <string name="text_post_location">Post location</string>
 </resources>

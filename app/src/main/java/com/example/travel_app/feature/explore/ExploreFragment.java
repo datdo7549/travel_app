@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.travel_app.CreatePostActivity;
 import com.example.travel_app.core.listeners.ItemPostClickListener;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentExploreBinding;
@@ -44,6 +45,8 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
             navController.navigate(action);
         });
         viewBinding.recyclerViewPosts.setAdapter(postAdapter);
+
+        viewBinding.btnCreatePost.setOnClickListener(v -> CreatePostActivity.start(requireContext()));
     }
 
     private void initViewModel() {

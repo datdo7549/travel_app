@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.core.views.CommentBottomSheetDialog;
@@ -38,6 +39,10 @@ public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        Glide.with(view)
+                .load(img_user_post_img_cover_sample)
+                .centerCrop()
+                .into(viewBinding.imgPostCover);
         viewBinding.btnBack.setOnClickListener(v -> navController.navigateUp());
         viewBinding.textViewCommentsCount.setOnClickListener(v -> {
             ArrayList<Comment> arrayList = new ArrayList<>();
