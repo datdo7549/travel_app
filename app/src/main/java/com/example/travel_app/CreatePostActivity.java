@@ -15,6 +15,12 @@ public class CreatePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreatePostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        initView();
+    }
+
+    private void initView() {
+        binding.btnChooseLocation.setOnClickListener(v -> ChooseLocationActivity.start(this));
     }
 
     public static void start(Context context) {
