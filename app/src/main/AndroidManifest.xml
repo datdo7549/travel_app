@@ -4,7 +4,8 @@
     package="com.example.travel_app">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -16,6 +17,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Travel_app"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAMoPNTAMFoTOOGo8BGyKR13X16MrA6DAo"/>
+        <activity
+            android:name=".ChooseLocationActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".CreatePostActivity"
             android:exported="false" />
@@ -32,7 +43,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>
