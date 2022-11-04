@@ -51,4 +51,9 @@
             android:defaultValue="1"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/groupFragment"
+        android:name="com.example.travel_app.feature.groups.GroupFragment"
+        android:label="fragment_group"
+        tools:layout="@layout/fragment_group" />
 </navigation>

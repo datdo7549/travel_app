@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/exploreFragment"
-        android:title="Explore"
-        android:icon="@drawable/ic_explore"/>
+    <item
+        android:id="@+id/groupFragment"
+        android:icon="@drawable/ic_group"
+        android:title="Group" />
 
-    <item android:id="@+id/profileFragment"
-        android:title="Profile"
-        android:icon="@drawable/ic_person"/>
+    <item
+        android:id="@+id/exploreFragment"
+        android:icon="@drawable/ic_explore"
+        android:title="Explore" />
+
+    <item
+        android:id="@+id/friendsFragment"
+        android:icon="@drawable/ic_friend"
+        android:title="Friends" />
+
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_person"
+        android:title="Profile" />
+
 </menu>
