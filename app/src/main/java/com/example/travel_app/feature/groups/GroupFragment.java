@@ -31,7 +31,7 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, GroupFragm
     }
 
     private void initView() {
-        teammateAdapter = new TeammateAdapter();
+        teammateAdapter = new TeammateAdapter(null);
         viewBinding.rvListTeammate.setAdapter(teammateAdapter);
     }
 
