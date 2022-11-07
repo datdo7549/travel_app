@@ -3,6 +3,8 @@ plugins {
     id 'com.google.gms.google-services'
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
+
+    id 'kotlin-android'
 }
 
 apply plugin: 'dagger.hilt.android.plugin'
@@ -39,7 +41,7 @@ android {
 
 dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-    def nav_version = "2.5.2"
+    def nav_version = "2.1.0"
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.6.1'
