@@ -9,17 +9,13 @@ import static com.example.travel_app.feature.login.model.RegisterAccountStatus.W
 
 import android.app.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.travel_app.core.Const;
 import com.example.travel_app.core.platform.BaseViewModel;
 import com.example.travel_app.feature.login.model.RegisterAccountStatus;
-import com.example.travel_app.feature.profile.model.UserProfile;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.travel_app.feature.model.UserProfile;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 

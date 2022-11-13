@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.travel_app.core.Const;
 import com.example.travel_app.core.platform.BaseViewModel;
 import com.example.travel_app.feature.profile.model.UpdateProfileStatus;
-import com.example.travel_app.feature.profile.model.UserProfile;
+import com.example.travel_app.feature.model.UserProfile;
 
 import java.util.Objects;
 
