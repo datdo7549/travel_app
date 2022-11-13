@@ -98,6 +98,7 @@
                     app:layout_constraintStart_toEndOf="@id/text_view_like_count"/>
 
                 <TextView
+                    android:id="@+id/text_view_create_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="03/06/2022"

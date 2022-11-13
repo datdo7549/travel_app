@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -17,7 +18,9 @@ import com.example.travel_app.core.views.CommentBottomSheetDialog;
 import com.example.travel_app.databinding.FragmentPostDetailBinding;
 import com.example.travel_app.feature.explore.model.Comment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, PostDetailFragmentViewModel> {
     private String postId;
@@ -39,19 +42,36 @@ public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        Glide.with(view)
-                .load(img_user_post_img_cover_sample)
-                .centerCrop()
-                .into(viewBinding.imgPostCover);
-        viewBinding.btnBack.setOnClickListener(v -> navController.navigateUp());
-        viewBinding.textViewCommentsCount.setOnClickListener(v -> {
-            ArrayList<Comment> arrayList = new ArrayList<>();
-            arrayList.add(new Comment("1", "22", getResources().getString(R.string.img_avatar_sample), "Comment 1", 121323L));
-            arrayList.add(new Comment("2", "22", getResources().getString(R.string.img_avatar_sample), "Comment 2", 121323L));
-            arrayList.add(new Comment("3", "22", getResources().getString(R.string.img_avatar_sample), "Comment 3", 121323L));
+        initViewModel();
+    }
 
-            CommentBottomSheetDialog commentBottomSheetDialog = new CommentBottomSheetDialog(arrayList);
-            commentBottomSheetDialog.show(getChildFragmentManager(), CommentBottomSheetDialog.class.getSimpleName());
+    private void initViewModel() {
+        viewModel = new ViewModelProvider(this).get(PostDetailFragmentViewModel.class);
+
+        viewModel.getPostDetail(postId);
+        viewModel.postDetail.observe(getViewLifecycleOwner(), postDetail -> {
+            Glide.with(getView())
+                    .load(img_user_post_img_cover_sample)
+                    .centerCrop()
+                    .into(viewBinding.imgPostCover);
+            viewBinding.btnBack.setOnClickListener(v -> navController.navigateUp());
+            viewBinding.textViewCommentsCount.setOnClickListener(v -> {
+                ArrayList<Comment> arrayList = new ArrayList<>();
+                arrayList.add(new Comment("1", "22", getResources().getString(R.string.img_avatar_sample), "Comment 1", 121323L));
+                arrayList.add(new Comment("2", "22", getResources().getString(R.string.img_avatar_sample), "Comment 2", 121323L));
+                arrayList.add(new Comment("3", "22", getResources().getString(R.string.img_avatar_sample), "Comment 3", 121323L));
+
+                CommentBottomSheetDialog commentBottomSheetDialog = new CommentBottomSheetDialog(arrayList);
+                commentBottomSheetDialog.show(getChildFragmentManager(), CommentBottomSheetDialog.class.getSimpleName());
+            });
+
+
+            viewBinding.textViewPostLocation.setText(postDetail.getTitle());
+            viewBinding.textViewPostDescription.setText(postDetail.getDescription());
+            viewBinding.textViewPostLocationMap.setText(postDetail.getLocation());
+
+            String dateString = new SimpleDateFormat("dd/MM/yyyy").format(new Date(postDetail.getCreateDate()));
+            viewBinding.textViewCreateDate.setText(dateString);
         });
     }
 }

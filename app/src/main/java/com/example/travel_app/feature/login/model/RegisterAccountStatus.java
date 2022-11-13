@@ -7,7 +7,9 @@ public enum RegisterAccountStatus implements BaseEnum {
     FAIL(0, "Register", "Create account failed"),
     WRONG_FORMAT(2, "Register", "Please insert valid email or password"),
     DUPLICATE_ACCOUNT(3, "Register", "Account exists"),
-    SUCCESS_BUT_UPDATE_PROFILE_ERROR(4, "Register", "Update profile error");
+    SUCCESS_BUT_UPDATE_PROFILE_ERROR(4, "Register", "Update profile error"),
+    CREATE_POST_SUCCESS(5, "Create  post", "Create post success"),
+    CREATE_POST_FAIL(6, "Create  post", "Create post fail");
 
     private final int status;
     private final String title;
