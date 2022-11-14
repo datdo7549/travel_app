@@ -43,6 +43,7 @@ public class ExploreFragmentViewModel extends BaseViewModel {
         FirebaseDatabase.getInstance().getReference("UserPosts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                temp.clear();
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         UserPost user = postSnapshot.getValue(UserPost.class);

@@ -16,7 +16,6 @@
         android:id="@+id/text_view_comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="This is comment"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/roboto_slab_medium"
         android:textColor="@color/black"

@@ -16,11 +16,13 @@ import com.example.travel_app.R;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.core.views.CommentBottomSheetDialog;
 import com.example.travel_app.databinding.FragmentPostDetailBinding;
-import com.example.travel_app.feature.explore.model.Comment;
+import com.example.travel_app.feature.model.CommentModel;
+import com.example.travel_app.feature.model.UserPost;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, PostDetailFragmentViewModel> {
     private String postId;
@@ -42,6 +44,9 @@ public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        viewBinding.btnCreateComment.setOnClickListener(v -> {
+            viewModel.createComment(viewBinding.editCreateComment.getText().toString(), viewModel.postDetail.getValue());
+        });
         initViewModel();
     }
 
@@ -55,13 +60,15 @@ public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, 
                     .centerCrop()
                     .into(viewBinding.imgPostCover);
             viewBinding.btnBack.setOnClickListener(v -> navController.navigateUp());
+            if (postDetail.getComments() == null) {
+                viewBinding.textViewCommentsCount.setText("0 comment");
+                viewBinding.textViewCommentsCount.setEnabled(false);
+            } else {
+                viewBinding.textViewCommentsCount.setText(postDetail.getComments().size() + " comment");
+                viewBinding.textViewCommentsCount.setEnabled(true);
+            }
             viewBinding.textViewCommentsCount.setOnClickListener(v -> {
-                ArrayList<Comment> arrayList = new ArrayList<>();
-                arrayList.add(new Comment("1", "22", getResources().getString(R.string.img_avatar_sample), "Comment 1", 121323L));
-                arrayList.add(new Comment("2", "22", getResources().getString(R.string.img_avatar_sample), "Comment 2", 121323L));
-                arrayList.add(new Comment("3", "22", getResources().getString(R.string.img_avatar_sample), "Comment 3", 121323L));
-
-                CommentBottomSheetDialog commentBottomSheetDialog = new CommentBottomSheetDialog(arrayList);
+                CommentBottomSheetDialog commentBottomSheetDialog = new CommentBottomSheetDialog(postDetail.getComments());
                 commentBottomSheetDialog.show(getChildFragmentManager(), CommentBottomSheetDialog.class.getSimpleName());
             });
 

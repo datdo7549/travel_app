@@ -110,16 +110,28 @@
 
                 <EditText
                     android:id="@+id/edit_create_comment"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="15dp"
                     android:paddingHorizontal="10dp"
                     android:fontFamily="@font/roboto_slab_medium"
                     android:textSize="15sp"
                     android:hint="@string/text_comment"
-                    android:drawableRight="@drawable/ic_arrow_up"
                     android:background="@drawable/bg_comment_round_20"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnCreateComment"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_like_count"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnCreateComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_up"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintStart_toEndOf="@id/edit_create_comment"
+                    app:layout_constraintTop_toTopOf="@id/edit_create_comment"
+                    app:layout_constraintBottom_toBottomOf="@id/edit_create_comment"
+                    app:layout_constraintEnd_toEndOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

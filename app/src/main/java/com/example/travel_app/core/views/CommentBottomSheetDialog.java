@@ -1,7 +1,6 @@
 package com.example.travel_app.core.views;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.travel_app.R;
 import com.example.travel_app.databinding.CommentBottomSheetLayoutBinding;
 import com.example.travel_app.feature.explore.adapter.CommentAdapter;
-import com.example.travel_app.feature.explore.model.Comment;
+import com.example.travel_app.feature.model.CommentModel;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -23,11 +22,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.util.ArrayList;
 
 public class CommentBottomSheetDialog extends BottomSheetDialogFragment {
-    private ArrayList<Comment> arrayList;
+    private ArrayList<CommentModel> arrayList;
     private CommentAdapter commentAdapter;
-    public CommentBottomSheetDialog(ArrayList<Comment> arrayList) {
+
+    public CommentBottomSheetDialog(ArrayList<CommentModel> arrayList) {
         this.arrayList = arrayList;
     }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -57,9 +58,8 @@ public class CommentBottomSheetDialog extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        commentAdapter = new CommentAdapter();
+        commentAdapter = new CommentAdapter(arrayList, requireContext());
         RecyclerView rvComments = view.findViewById(R.id.recycler_view_comment);
         rvComments.setAdapter(commentAdapter);
-        commentAdapter.submitList(arrayList);
     }
 }
