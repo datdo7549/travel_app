@@ -23,18 +23,7 @@
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/img_user_avatar"
-        app:layout_constraintTop_toTopOf="@id/img_user_avatar" />
+        app:layout_constraintTop_toTopOf="@id/img_user_avatar"
+        app:layout_constraintBottom_toBottomOf="@id/img_user_avatar"/>
 
-    <TextView
-        android:id="@+id/text_view_comment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto_slab_medium"
-        android:text="This is comment"
-        android:textColor="@color/color_grey_1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/text_view_actor_name"
-        app:layout_constraintTop_toBottomOf="@id/text_view_actor_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
-import com.example.travel_app.feature.model.CommentModel;
+import com.example.travel_app.feature.model.UserProfile;
 
 import java.util.ArrayList;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
-    private final ArrayList<CommentModel> comments;
+public class LikedAdapter extends RecyclerView.Adapter<LikedAdapter.ViewHolder> {
+    private final ArrayList<UserProfile> users;
 
-    public CommentAdapter(ArrayList<CommentModel> comments) {
-        this.comments = comments;
+    public LikedAdapter(ArrayList<UserProfile> users) {
+        this.users = users;
     }
 
     @NonNull
@@ -35,25 +35,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                 .circleCrop()
                 .into(holder.avatar);
 
-        holder.actorName.setText(comments.get(position).getUserName());
-        holder.comment.setText(comments.get(position).getContent());
+        holder.actorName.setText(users.get(position).name);
     }
 
     @Override
     public int getItemCount() {
-        return comments.size();
+        return users.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final AppCompatImageView avatar;
-        private final TextView actorName, comment;
+        private final TextView actorName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             avatar = itemView.findViewById(R.id.img_user_avatar);
             actorName = itemView.findViewById(R.id.text_view_actor_name);
-            comment = itemView.findViewById(R.id.text_view_comment);
         }
     }
 }

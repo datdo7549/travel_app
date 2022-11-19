@@ -1,6 +1,5 @@
 package com.example.travel_app.feature.model;
 
-import com.example.travel_app.feature.model.UserPost;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.ArrayList;
@@ -18,8 +17,7 @@ public class UserProfile {
     public ArrayList<UserPost> favoritePosts = new ArrayList<>();
     public ArrayList<String> friends = new ArrayList<>();
 
-    public UserProfile() {
-    }
+    public UserProfile() {}
 
     public UserProfile(String uuid) {
         this.uuid = uuid;

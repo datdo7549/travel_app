@@ -53,9 +53,10 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
     }
 
     private void initView() {
-        postAdapter = new PostAdapter(posts, requireContext(), new ItemPostClickListener() {
+        postAdapter = new PostAdapter(posts, new ItemPostClickListener() {
             @Override
             public void onItemClick(String postId) {
+                //Navigate to  Post detail
                 ExploreFragmentDirections.ActionExploreFragmentToPostDetailFragment action = ExploreFragmentDirections.actionExploreFragmentToPostDetailFragment();
                 action.setPostId(postId);
                 navController.navigate(action);
@@ -63,26 +64,24 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
 
             @Override
             public void onItemFavoriteClick(UserPost post, boolean isLiked) {
+                ArrayList<String> likedList = new ArrayList<>();
                 if (isLiked) {
-
+                    //Do unlike post
+                    likedList = post.getLikes();
+                    likedList.remove(userProfile.uuid);
                 } else {
-                    try {
-                        ArrayList<String> likedList;
+                    //Do like post
+                    if (post.getLikes() != null && post.getLikes().size() > 0) {
                         likedList = post.getLikes();
-                        likedList.add(FirebaseAuth.getInstance().getUid());
-                        post.setLikes(likedList);
-                    } catch (NullPointerException e) {
-                        ArrayList<String> likedList = new ArrayList<>();
-                        likedList.add(FirebaseAuth.getInstance().getUid());
-                        post.setLikes(likedList);
                     }
-
-                    viewModel.likePost(post);
+                    likedList.add(FirebaseAuth.getInstance().getUid());
+                    post.setLikes(likedList);
                 }
+                viewModel.likePost(post);
             }
         }, FirebaseAuth.getInstance().getUid());
-        viewBinding.recyclerViewPosts.setAdapter(postAdapter);
 
+        viewBinding.recyclerViewPosts.setAdapter(postAdapter);
         viewBinding.btnCreatePost.setOnClickListener(v -> CreatePostActivity.start(requireContext()));
     }
 
@@ -98,15 +97,5 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
         });
 
         viewModel.userProfile.observe(getViewLifecycleOwner(), profile -> userProfile = profile);
-
-        viewModel.likePostResponse.observe(getViewLifecycleOwner(), result -> {
-            result.setLike(true);
-            for (UserPost post : posts) {
-                if (Objects.equals(post.getId(), result.getId())) {
-                    post.setLike(true);
-                }
-            }
-            postAdapter.notifyDataSetChanged();
-        });
     }
 }
