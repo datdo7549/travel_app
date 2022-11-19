@@ -1,8 +1,5 @@
 package com.example.travel_app.feature.explore;
 
-import static com.example.travel_app.feature.login.model.RegisterAccountStatus.CREATE_POST_FAIL;
-import static com.example.travel_app.feature.login.model.RegisterAccountStatus.CREATE_POST_SUCCESS;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,13 +21,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class ExploreFragmentViewModel extends BaseViewModel {
-    private MutableLiveData<ArrayList<UserPost>> _posts = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<UserPost>> _posts = new MutableLiveData<>();
     public LiveData<ArrayList<UserPost>> posts = _posts;
 
-    private MutableLiveData<UserProfile> _userProfile = new MutableLiveData<>();
+    private final MutableLiveData<UserProfile> _userProfile = new MutableLiveData<>();
     public LiveData<UserProfile> userProfile = _userProfile;
 
-    private MutableLiveData<UserPost> _likePostResponse = new MutableLiveData<>();
+    private final MutableLiveData<UserPost> _likePostResponse = new MutableLiveData<>();
     public LiveData<UserPost> likePostResponse = _likePostResponse;
 
     @Inject
@@ -38,17 +35,17 @@ public class ExploreFragmentViewModel extends BaseViewModel {
     }
 
     public void getAllUserPost() {
-        _posts.postValue(new ArrayList<>());
-        ArrayList<UserPost> temp = new ArrayList<>();
+        ArrayList<UserPost> users = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("UserPosts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    users.clear();
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         UserPost user = postSnapshot.getValue(UserPost.class);
-                        temp.add(user);
+                        users.add(user);
                     }
-                    _posts.postValue(temp);
+                    _posts.postValue(users);
                 }
             }
 

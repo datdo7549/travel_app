@@ -22,7 +22,6 @@ import java.util.function.Consumer;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private ArrayList<UserPost> posts;
-    private Context context;
     private String userId;
 
     private ItemPostClickListener listener;
@@ -30,9 +29,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     boolean isLiked = false;
 
 
-    public PostAdapter(ArrayList<UserPost> posts, Context context, ItemPostClickListener listener, String userId) {
+    public PostAdapter(ArrayList<UserPost> posts, ItemPostClickListener listener, String userId) {
         this.posts = posts;
-        this.context = context;
         this.listener = listener;
         this.userId = userId;
     }
@@ -58,9 +56,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.description.setText(posts.get(position).getDescription());
 
         try {
+            isLiked = false;
             for (String userLike: posts.get(position).getLikes()) {
                 if (Objects.equals(userLike, userId)) {
                     isLiked = true;
+                    break;
                 }
             }
         } catch (NullPointerException e) {

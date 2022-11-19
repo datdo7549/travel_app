@@ -13,25 +13,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travel_app.R;
 import com.example.travel_app.databinding.CommentBottomSheetLayoutBinding;
+import com.example.travel_app.databinding.LikedBottomSheetLayoutBinding;
 import com.example.travel_app.feature.explore.adapter.CommentAdapter;
+import com.example.travel_app.feature.explore.adapter.LikedAdapter;
 import com.example.travel_app.feature.model.CommentModel;
-import com.example.travel_app.feature.model.UserPost;
+import com.example.travel_app.feature.model.UserProfile;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CommentBottomSheetDialog extends BottomSheetDialogFragment {
-    private ArrayList<CommentModel> comments;
-    private CommentAdapter commentAdapter;
+public class LikedBottomSheetDialog extends BottomSheetDialogFragment {
+    private ArrayList<UserProfile> likedUserList;
+    private LikedAdapter likedAdapter;
 
-    public CommentBottomSheetDialog(ArrayList<CommentModel> comments) {
-        this.comments = comments;
+    public LikedBottomSheetDialog(ArrayList<UserProfile> likedUserList) {
+        this.likedUserList = likedUserList;
     }
     @NonNull
     @Override
@@ -55,14 +53,14 @@ public class CommentBottomSheetDialog extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return CommentBottomSheetLayoutBinding.inflate(inflater, container, false).getRoot();
+        return LikedBottomSheetLayoutBinding.inflate(inflater, container, false).getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        commentAdapter = new CommentAdapter(comments);
-        RecyclerView rvComments = view.findViewById(R.id.recycler_view_comment);
-        rvComments.setAdapter(commentAdapter);
+        likedAdapter = new LikedAdapter(likedUserList);
+        RecyclerView rvLiked = view.findViewById(R.id.recycler_view_liked);
+        rvLiked.setAdapter(likedAdapter);
     }
 }
