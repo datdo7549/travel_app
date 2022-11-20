@@ -1,28 +1,29 @@
 package com.example.travel_app.feature.friends;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.travel_app.R;
-import com.example.travel_app.core.listeners.ItemFriendClickListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentFriendsBinding;
-import com.example.travel_app.feature.groups.GroupFragmentViewModel;
 import com.example.travel_app.feature.groups.adapter.TeammateAdapter;
+import com.example.travel_app.feature.model.UserProfile;
+
+import java.util.ArrayList;
 
 public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, FriendsFragmentViewModel> {
     private TeammateAdapter teammateAdapter;
     private NavController controller;
+
+    private ArrayList<UserProfile> friends = new ArrayList<>();
+
     @Override
     public FragmentFriendsBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentFriendsBinding.inflate(inflater, container, false);
@@ -37,17 +38,50 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
     }
 
     private void initView() {
-        teammateAdapter = new TeammateAdapter(new ItemFriendClickListener() {
-            @Override
-            public void onItemClick(String id) {
-                controller.navigate(R.id.action_friendsFragment_to_chatFragment);
-            }
-        });
+        teammateAdapter = new TeammateAdapter(friends);
         viewBinding.rvListTeammate.setAdapter(teammateAdapter);
     }
 
     private void initViewModel() {
         viewModel = new ViewModelProvider(this).get(FriendsFragmentViewModel.class);
-        viewModel.teammate.observe(getViewLifecycleOwner(), teammates -> teammateAdapter.submitList(teammates));
+        viewModel.getFriends();
+        viewModel.getStatusOfFriendList();
+        viewModel.friends.observe(getViewLifecycleOwner(), friendList -> {
+            friends.clear();
+            if (viewModel.onlineUsers.getValue() != null && viewModel.onlineUsers.getValue().size() > 0) {
+                for (UserProfile userProfile : friendList) {
+                    for (String onlineId : viewModel.onlineUsers.getValue()) {
+                        if (userProfile.uuid.equals(onlineId)) {
+                            userProfile.isOnline = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            friends.addAll(friendList);
+
+            teammateAdapter.notifyDataSetChanged();
+        });
+
+        viewModel.onlineUsers.observe(getViewLifecycleOwner(), onlineList -> {
+            friends.clear();
+            ArrayList<UserProfile> friendList = viewModel.friends.getValue();
+            if (viewModel.friends.getValue() != null && viewModel.friends.getValue().size() > 0) {
+                for (UserProfile userProfile : friendList) {
+                    for (String onlineId : onlineList) {
+                        if (userProfile.uuid.equals(onlineId)) {
+                            userProfile.isOnline = true;
+                            break;
+                        } else {
+                            userProfile.isOnline = false;
+                        }
+                    }
+                }
+            }
+            assert friendList != null;
+            friends.addAll(friendList);
+
+            teammateAdapter.notifyDataSetChanged();
+        });
     }
 }

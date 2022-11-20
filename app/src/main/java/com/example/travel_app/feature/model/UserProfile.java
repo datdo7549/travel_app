@@ -13,9 +13,10 @@ public class UserProfile {
     public Long birthday = 0L;
     public String address = "";
     public int likeCount = 0;
+    public boolean isOnline = false;
     public ArrayList<UserPost> posts = new ArrayList<>();
     public ArrayList<UserPost> favoritePosts = new ArrayList<>();
-    public ArrayList<String> friends = new ArrayList<>();
+    public ArrayList<UserProfile> friends = new ArrayList<>();
 
     public UserProfile() {}
 
@@ -26,6 +27,11 @@ public class UserProfile {
     public UserProfile(String uuid, String email) {
         this.uuid = uuid;
         this.email = email;
+    }
+
+    public UserProfile(String uuid, String name, String email) {
+        this.uuid = uuid;
+        this.name = name;
     }
 
     public UserProfile(String uuid, String name, String phone, Long birthday, String address) {
@@ -47,5 +53,9 @@ public class UserProfile {
         this.phone = phone;
         this.birthday = birthday;
         this.address = address;
+    }
+
+    public void setFriends(ArrayList<UserProfile> friends) {
+        this.friends = friends;
     }
 }

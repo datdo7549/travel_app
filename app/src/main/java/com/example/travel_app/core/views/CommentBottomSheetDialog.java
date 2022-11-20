@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travel_app.R;
+import com.example.travel_app.core.listeners.ItemLikeCommentClick;
 import com.example.travel_app.databinding.CommentBottomSheetLayoutBinding;
 import com.example.travel_app.feature.explore.adapter.CommentAdapter;
 import com.example.travel_app.feature.model.CommentModel;
@@ -32,6 +33,12 @@ public class CommentBottomSheetDialog extends BottomSheetDialogFragment {
 
     public CommentBottomSheetDialog(ArrayList<CommentModel> comments) {
         this.comments = comments;
+    }
+
+    private ItemLikeCommentClick listener;
+
+    public void setListener(ItemLikeCommentClick listener) {
+        this.listener = listener;
     }
     @NonNull
     @Override
@@ -62,6 +69,7 @@ public class CommentBottomSheetDialog extends BottomSheetDialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         commentAdapter = new CommentAdapter(comments);
+        commentAdapter.setListener(listener);
         RecyclerView rvComments = view.findViewById(R.id.recycler_view_comment);
         rvComments.setAdapter(commentAdapter);
     }

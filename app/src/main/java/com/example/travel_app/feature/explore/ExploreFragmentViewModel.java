@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -73,6 +74,12 @@ public class ExploreFragmentViewModel extends BaseViewModel {
             if (task.isSuccessful()) {
                 _likePostResponse.postValue(post);
             }
+        });
+    }
+
+    public void setOnline() {
+        firebaseDatabase.child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile.getValue()).uuid).setValue(userProfile.getValue().uuid).addOnCompleteListener(task -> {
+
         });
     }
 }

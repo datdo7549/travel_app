@@ -96,6 +96,9 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
             postAdapter.notifyDataSetChanged();
         });
 
-        viewModel.userProfile.observe(getViewLifecycleOwner(), profile -> userProfile = profile);
+        viewModel.userProfile.observe(getViewLifecycleOwner(), profile -> {
+            userProfile = profile;
+            viewModel.setOnline();
+        });
     }
 }

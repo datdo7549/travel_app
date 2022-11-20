@@ -59,6 +59,7 @@ public class PostDetailFragmentViewModel extends BaseViewModel {
         FirebaseDatabase.getInstance().getReference("UserProfile").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                likedListUser.clear();
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         UserProfile user = postSnapshot.getValue(UserProfile.class);
