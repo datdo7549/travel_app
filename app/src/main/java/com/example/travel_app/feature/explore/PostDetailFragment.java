@@ -17,9 +17,11 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
+import com.example.travel_app.core.listeners.ItemLikeCommentClick;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.core.views.CommentBottomSheetDialog;
 import com.example.travel_app.core.views.LikedBottomSheetDialog;
+import com.example.travel_app.core.views.UserProfileDialog;
 import com.example.travel_app.databinding.FragmentPostDetailBinding;
 import com.example.travel_app.feature.model.CommentModel;
 import com.example.travel_app.feature.model.UserPost;
@@ -77,11 +79,19 @@ public class PostDetailFragment extends BaseFragment<FragmentPostDetailBinding, 
 
         viewBinding.textViewLikeCount.setOnClickListener(v -> {
             LikedBottomSheetDialog likedBottomSheetDialog = new LikedBottomSheetDialog(viewModel.userLikedList.getValue());
+            likedBottomSheetDialog.setListener((uuid, userName) -> {
+                UserProfileDialog dialog = new UserProfileDialog(uuid, userName, false);
+                dialog.show(getChildFragmentManager(), UserProfileDialog.class.getSimpleName());
+            });
             likedBottomSheetDialog.show(getChildFragmentManager(), LikedBottomSheetDialog.class.getSimpleName());
         });
 
         viewBinding.textViewCommentsCount.setOnClickListener(v -> {
             CommentBottomSheetDialog commentBottomSheetDialog = new CommentBottomSheetDialog(Objects.requireNonNull(viewModel.postDetail.getValue()).getComments());
+            commentBottomSheetDialog.setListener((uuid, userName) -> {
+                UserProfileDialog dialog = new UserProfileDialog(uuid, userName, false);
+                dialog.show(getChildFragmentManager(), UserProfileDialog.class.getSimpleName());
+            });
             commentBottomSheetDialog.show(getChildFragmentManager(), CommentBottomSheetDialog.class.getSimpleName());
         });
 

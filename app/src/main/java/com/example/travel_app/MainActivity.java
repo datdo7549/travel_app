@@ -1,5 +1,7 @@
 package com.example.travel_app;
 
+import static com.example.travel_app.feature.explore.ExploreFragment.userProfile;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +11,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.travel_app.core.Const;
 import com.example.travel_app.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -35,5 +41,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = binding.bottomNavigationView;
         NavigationUI.setupWithNavController(bottomNav, navController);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
     }
 }

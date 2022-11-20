@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
+import com.example.travel_app.core.listeners.ItemLikeCommentClick;
 import com.example.travel_app.feature.model.UserProfile;
 
 import java.util.ArrayList;
@@ -22,10 +23,16 @@ public class LikedAdapter extends RecyclerView.Adapter<LikedAdapter.ViewHolder> 
         this.users = users;
     }
 
+    private ItemLikeCommentClick listener;
+
+    public void setListener(ItemLikeCommentClick listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment_layout, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_liked_layout, parent, false));
     }
 
     @Override
@@ -36,6 +43,14 @@ public class LikedAdapter extends RecyclerView.Adapter<LikedAdapter.ViewHolder> 
                 .into(holder.avatar);
 
         holder.actorName.setText(users.get(position).name);
+
+        holder.actorName.setOnClickListener(v -> {
+            this.listener.onAvatarClick(users.get(position).uuid, users.get(position).name);
+        });
+
+        holder.avatar.setOnClickListener(v -> {
+            this.listener.onAvatarClick(users.get(position).uuid, users.get(position).name);
+        });
     }
 
     @Override
