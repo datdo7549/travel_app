@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.travel_app.R
 import com.example.travel_app.feature.chat.model.MessageData
+import com.example.travel_app.feature.explore.ExploreFragment.userProfile
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -44,7 +45,7 @@ class MessageListAdapter(var messages: MutableList<MessageData>) :
 
     override fun getItemViewType(position: Int): Int {
         val messageData = messages[position]
-        return if (messageData.senderId == "1234") {
+        return if (messageData.senderId == userProfile.uuid) {
             VIEW_TYPE_MESSAGE_SENT
         } else {
             VIEW_TYPE_MESSAGE_RECEIVED

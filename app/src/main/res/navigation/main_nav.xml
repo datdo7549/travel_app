@@ -69,5 +69,10 @@
         android:id="@+id/chatFragment"
         android:name="com.example.travel_app.feature.chat.ChatFragment"
         android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="receiveId"
+            android:defaultValue="1"
+            app:argType="string"/>
+    </fragment>
 </navigation>
