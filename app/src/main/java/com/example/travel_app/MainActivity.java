@@ -46,12 +46,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
+        try {
+            FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
+        } catch (Exception e) {}
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
+        try {
+            FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
+        } catch (Exception e) {}
     }
 }

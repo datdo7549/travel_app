@@ -44,11 +44,30 @@ public class UserProfileDialog extends DialogFragment {
         return inflater.inflate(R.layout.user_profile_popup, container, false);
     }
 
+    private UserProfile userProfile2;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         avatar = view.findViewById(R.id.img_avatar);
         tvName = view.findViewById(R.id.user_name_text_view);
+
+
+
+        FirebaseDatabase.getInstance().getReference("UserProfile").child(uuid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    userProfile2 = snapshot.getValue(UserProfile.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         btnGroup = view.findViewById(R.id.btnGroup);
         btnAddFriend = view.findViewById(R.id.btnAddFriend);
@@ -109,6 +128,17 @@ public class UserProfileDialog extends DialogFragment {
 
             FirebaseDatabase.getInstance().getReference("UserProfile").child(userProfile.uuid).child("friends").setValue(currentFriendList).addOnCompleteListener(task -> {
                 userProfile.setFriends(currentFriendList);
+
+                ArrayList<UserProfile> currentFriendList2 = new ArrayList<>();
+                if (userProfile2.friends != null && userProfile2.friends.size() > 0) {
+                    currentFriendList2.addAll(userProfile2.friends);
+                }
+                currentFriendList2.add(new UserProfile(userProfile.uuid, userProfile.name, ""));
+
+                FirebaseDatabase.getInstance().getReference("UserProfile").child(userProfile2.uuid).child("friends").setValue(currentFriendList2).addOnCompleteListener(task1 -> {
+
+                });
+
                 dismiss();
             });
         });

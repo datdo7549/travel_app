@@ -11,8 +11,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.travel_app.R;
+import com.example.travel_app.core.listeners.ItemFriendClickListener;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentFriendsBinding;
+import com.example.travel_app.feature.explore.ExploreFragmentDirections;
 import com.example.travel_app.feature.groups.adapter.TeammateAdapter;
 import com.example.travel_app.feature.model.UserProfile;
 
@@ -38,7 +41,11 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
     }
 
     private void initView() {
-        teammateAdapter = new TeammateAdapter(friends);
+        teammateAdapter = new TeammateAdapter(friends, id -> {
+            FriendsFragmentDirections.ActionFriendsFragmentToChatFragment action = FriendsFragmentDirections.actionFriendsFragmentToChatFragment();
+            action.setReceiveId(id);
+            controller.navigate(action);
+        });
         viewBinding.rvListTeammate.setAdapter(teammateAdapter);
     }
 
@@ -64,24 +71,28 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
         });
 
         viewModel.onlineUsers.observe(getViewLifecycleOwner(), onlineList -> {
-            friends.clear();
-            ArrayList<UserProfile> friendList = viewModel.friends.getValue();
-            if (viewModel.friends.getValue() != null && viewModel.friends.getValue().size() > 0) {
-                for (UserProfile userProfile : friendList) {
-                    for (String onlineId : onlineList) {
-                        if (userProfile.uuid.equals(onlineId)) {
-                            userProfile.isOnline = true;
-                            break;
-                        } else {
-                            userProfile.isOnline = false;
+            try {
+                friends.clear();
+                ArrayList<UserProfile> friendList = viewModel.friends.getValue();
+                if (viewModel.friends.getValue() != null && viewModel.friends.getValue().size() > 0) {
+                    for (UserProfile userProfile : friendList) {
+                        for (String onlineId : onlineList) {
+                            if (userProfile.uuid.equals(onlineId)) {
+                                userProfile.isOnline = true;
+                                break;
+                            } else {
+                                userProfile.isOnline = false;
+                            }
                         }
                     }
                 }
-            }
-            assert friendList != null;
-            friends.addAll(friendList);
+                if (friendList != null) {
+                    friends.addAll(friendList);
+                }
 
-            teammateAdapter.notifyDataSetChanged();
+                teammateAdapter.notifyDataSetChanged();
+            } catch (Exception e) {}
+
         });
     }
 }
