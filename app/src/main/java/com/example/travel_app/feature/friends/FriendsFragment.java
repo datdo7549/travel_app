@@ -11,11 +11,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.travel_app.R;
-import com.example.travel_app.core.listeners.ItemFriendClickListener;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentFriendsBinding;
-import com.example.travel_app.feature.explore.ExploreFragmentDirections;
 import com.example.travel_app.feature.groups.adapter.TeammateAdapter;
 import com.example.travel_app.feature.model.UserProfile;
 
@@ -41,9 +38,11 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
     }
 
     private void initView() {
-        teammateAdapter = new TeammateAdapter(friends, id -> {
+        teammateAdapter = new TeammateAdapter(friends, (id, name )-> {
             FriendsFragmentDirections.ActionFriendsFragmentToChatFragment action = FriendsFragmentDirections.actionFriendsFragmentToChatFragment();
             action.setReceiveId(id);
+            action.setName(name);
+
             controller.navigate(action);
         });
         viewBinding.rvListTeammate.setAdapter(teammateAdapter);
@@ -91,7 +90,8 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
                 }
 
                 teammateAdapter.notifyDataSetChanged();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
 
         });
     }
