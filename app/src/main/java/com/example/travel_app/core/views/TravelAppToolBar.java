@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.travel_app.R;
@@ -50,5 +51,21 @@ public class TravelAppToolBar extends ConstraintLayout {
 
     public void setButtonBackListener(BackButtonListener listener) {
         this.listener = listener;
+    }
+
+    public void setTitleToolBar(String title) {
+        binding.toolBarTitle.setText(title);
+    }
+
+    public void visibilityBtnAddGroup(boolean visibility) {
+        if (visibility) {
+            binding.btnAddToGroup.setVisibility(VISIBLE);
+        } else {
+            binding.btnAddToGroup.setVisibility(GONE);
+        }
+    }
+
+    public AppCompatImageView getBtnAddGroup() {
+        return binding.btnAddToGroup;
     }
 }

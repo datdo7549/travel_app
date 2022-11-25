@@ -18,6 +18,9 @@ public class UserProfile {
     public ArrayList<UserPost> favoritePosts = new ArrayList<>();
     public ArrayList<UserProfile> friends = new ArrayList<>();
 
+    public String myCreatedGroup = "";
+    public ArrayList<GroupModel> listGroup = new ArrayList<>();
+
     public UserProfile() {}
 
     public UserProfile(String uuid) {
@@ -58,4 +61,8 @@ public class UserProfile {
     public void setFriends(ArrayList<UserProfile> friends) {
         this.friends = friends;
     }
+
+    public void setListGroup(ArrayList<GroupModel> listGroup) {this.listGroup = listGroup;}
+
+
 }

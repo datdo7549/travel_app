@@ -55,7 +55,11 @@
         android:id="@+id/groupFragment"
         android:name="com.example.travel_app.feature.groups.GroupFragment"
         android:label="fragment_group"
-        tools:layout="@layout/fragment_group" />
+        tools:layout="@layout/fragment_group" >
+        <action
+            android:id="@+id/action_groupFragment_to_groupDetailFragment"
+            app:destination="@id/groupDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/friendsFragment"
         android:name="com.example.travel_app.feature.friends.FriendsFragment"
@@ -74,5 +78,21 @@
             android:name="receiveId"
             android:defaultValue="1"
             app:argType="string"/>
+        <argument
+            android:name="name"
+            android:defaultValue=""
+            app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/groupDetailFragment"
+        android:name="com.example.travel_app.feature.groups.GroupDetailFragment"
+        android:label="GroupDetailFragment" >
+        <argument android:name="groupId"
+            app:argType="string"
+            android:defaultValue=""/>
+        <argument android:name="groupName"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+
 </navigation>

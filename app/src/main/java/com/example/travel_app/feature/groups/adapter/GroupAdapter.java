@@ -12,17 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
 import com.example.travel_app.core.listeners.ItemFriendClickListener;
-import com.example.travel_app.feature.model.UserProfile;
+import com.example.travel_app.core.listeners.ItemGroupClickListener;
+import com.example.travel_app.feature.model.GroupModel;
 
 import java.util.ArrayList;
 
-public class TeammateAdapter extends RecyclerView.Adapter<TeammateAdapter.ViewHolder> {
-    private ArrayList<UserProfile> friends;
+public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
+    private ArrayList<GroupModel> groups;
 
-    private ItemFriendClickListener listener;
+    private ItemGroupClickListener listener;
 
-    public TeammateAdapter(ArrayList<UserProfile> friends, ItemFriendClickListener listener) {
-        this.friends = friends;
+    public GroupAdapter(ArrayList<GroupModel> groups, ItemGroupClickListener listener) {
+        this.groups = groups;
         this.listener = listener;
     }
 
@@ -35,27 +36,22 @@ public class TeammateAdapter extends RecyclerView.Adapter<TeammateAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(holder.itemView)
-                .load("https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80")
+                .load("https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGdyb3VwfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60")
                 .circleCrop()
                 .into(holder.avatar);
 
-        holder.name.setText(friends.get(position).name);
+        holder.name.setText(groups.get(position).getGroupName());
 
-        if (friends.get(position).isOnline) {
-            holder.status.setImageResource(R.drawable.ic_green_circle);
-            //holder.itemView.setEnabled(true);
-            holder.itemView.setOnClickListener(v -> this.listener.onItemClick(friends.get(position).uuid, friends.get(position).name));
-        } else {
-            holder.status.setImageResource(R.drawable.ic_red_circle);
-            //holder.itemView.setEnabled(false);
-            holder.itemView.setOnClickListener(v -> this.listener.onItemClick(friends.get(position).uuid,  friends.get(position).name));
+        holder.status.setVisibility(View.GONE);
 
-        }
+        holder.itemView.setOnClickListener(v -> {
+            listener.onItemClick(groups.get(position).getGroupID(), groups.get(position).getGroupName());
+        });
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return groups.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

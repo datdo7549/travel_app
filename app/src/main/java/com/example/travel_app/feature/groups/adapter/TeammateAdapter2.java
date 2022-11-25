@@ -13,17 +13,15 @@ import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
 import com.example.travel_app.core.listeners.ItemFriendClickListener;
 import com.example.travel_app.feature.model.UserProfile;
+import com.example.travel_app.feature.model.UserProfileLite;
 
 import java.util.ArrayList;
 
-public class TeammateAdapter extends RecyclerView.Adapter<TeammateAdapter.ViewHolder> {
-    private ArrayList<UserProfile> friends;
+public class TeammateAdapter2 extends RecyclerView.Adapter<TeammateAdapter2.ViewHolder> {
+    private ArrayList<UserProfileLite> members = new ArrayList<>();
 
-    private ItemFriendClickListener listener;
-
-    public TeammateAdapter(ArrayList<UserProfile> friends, ItemFriendClickListener listener) {
-        this.friends = friends;
-        this.listener = listener;
+    public TeammateAdapter2(ArrayList<UserProfileLite> members) {
+        this.members = members;
     }
 
     @NonNull
@@ -39,23 +37,12 @@ public class TeammateAdapter extends RecyclerView.Adapter<TeammateAdapter.ViewHo
                 .circleCrop()
                 .into(holder.avatar);
 
-        holder.name.setText(friends.get(position).name);
-
-        if (friends.get(position).isOnline) {
-            holder.status.setImageResource(R.drawable.ic_green_circle);
-            //holder.itemView.setEnabled(true);
-            holder.itemView.setOnClickListener(v -> this.listener.onItemClick(friends.get(position).uuid, friends.get(position).name));
-        } else {
-            holder.status.setImageResource(R.drawable.ic_red_circle);
-            //holder.itemView.setEnabled(false);
-            holder.itemView.setOnClickListener(v -> this.listener.onItemClick(friends.get(position).uuid,  friends.get(position).name));
-
-        }
+        holder.name.setText(members.get(position).name);
     }
 
     @Override
     public int getItemCount() {
-        return friends.size();
+        return members.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
