@@ -1,5 +1,6 @@
 package com.example.travel_app.feature.profile;
 
+import static com.example.travel_app.feature.explore.ExploreFragment.userProfile;
 import static com.example.travel_app.feature.profile.model.UserState.USER_LOG_IN;
 import static com.example.travel_app.feature.profile.model.UserState.USER_LOG_OUT;
 
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.travel_app.core.platform.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Inject;
 
@@ -29,6 +31,7 @@ public class ProfileSettingsFragmentViewModel extends BaseViewModel {
 
     public void logout() {
         firebaseAuth.signOut();
+        FirebaseDatabase.getInstance().getReference("LatLong").child(userProfile.uuid).removeValue();
     }
 
     public void removeAuthStateListener(FragmentActivity fragmentActivity) {

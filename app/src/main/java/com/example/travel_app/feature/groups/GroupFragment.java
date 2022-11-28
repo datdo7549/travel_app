@@ -37,22 +37,25 @@ public class GroupFragment extends BaseFragment<FragmentGroupBinding, GroupFragm
     }
 
     private void initView(View view) {
-        if (userProfile.myCreatedGroup != null && !userProfile.myCreatedGroup.equals("")) {
-            viewBinding.btnCreateGroup.setVisibility(View.GONE);
-        } else {
-            viewBinding.btnCreateGroup.setVisibility(View.VISIBLE);
-            viewBinding.btnCreateGroup.setOnClickListener(v -> {
-                viewModel.createGroup();
-            });
-        }
+        try {
+            if (userProfile.myCreatedGroup != null && !userProfile.myCreatedGroup.equals("")) {
+                viewBinding.btnCreateGroup.setVisibility(View.GONE);
+            } else {
+                viewBinding.btnCreateGroup.setVisibility(View.VISIBLE);
+                viewBinding.btnCreateGroup.setOnClickListener(v -> {
+                    viewModel.createGroup();
+                });
+            }
 
-        groupAdapter = new GroupAdapter(groups, (id, name) -> {
-            GroupFragmentDirections.ActionGroupFragmentToGroupDetailFragment action = GroupFragmentDirections.actionGroupFragmentToGroupDetailFragment();
-            action.setGroupId(id);
-            action.setGroupName(name);
-            Navigation.findNavController(view).navigate(action);
-        });
-        viewBinding.rvListGroup.setAdapter(groupAdapter);
+            groupAdapter = new GroupAdapter(groups, (id, name) -> {
+                GroupFragmentDirections.ActionGroupFragmentToGroupDetailFragment action = GroupFragmentDirections.actionGroupFragmentToGroupDetailFragment();
+                action.setGroupId(id);
+                action.setGroupName(name);
+                Navigation.findNavController(view).navigate(action);
+            });
+            viewBinding.rvListGroup.setAdapter(groupAdapter);
+        } catch (Exception e) {}
+
     }
 
     private void initViewModel() {

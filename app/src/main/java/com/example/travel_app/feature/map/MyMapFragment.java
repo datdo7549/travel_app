@@ -1,5 +1,7 @@
 package com.example.travel_app.feature.map;
 
+import static com.example.travel_app.feature.groups.GroupDetailFragment.listMemberId;
+
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -16,6 +18,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.travel_app.R;
+import com.example.travel_app.feature.model.MyLatLong;
+import com.example.travel_app.feature.model.UserProfile;
+import com.example.travel_app.feature.model.UserProfileLite;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -27,6 +32,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -153,5 +162,33 @@ public class MyMapFragment extends SupportMapFragment implements OnMapReadyCallb
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
+    }
+
+
+    public void setMemberLocation() {
+        FirebaseDatabase.getInstance().getReference("LatLong").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                googleMap.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    MyLatLong user = postSnapshot.getValue(MyLatLong.class);
+                    for (String memberId : listMemberId) {
+                        if (memberId.equals(user.uuid)) {
+                            MarkerOptions markerOptions = new MarkerOptions();
+                            markerOptions.position(new LatLng(user.lat,
+                                    user.longitude));
+                            markerOptions.title(user.name);
+                            // Clear previously click position.
+                            googleMap.addMarker(markerOptions);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

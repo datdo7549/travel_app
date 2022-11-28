@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.travel_app.TrackingActivity;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentGroupDetailBinding;
 import com.example.travel_app.feature.groups.adapter.TeammateAdapter2;
@@ -21,6 +22,8 @@ public class GroupDetailFragment extends BaseFragment<FragmentGroupDetailBinding
     private ArrayList<UserProfileLite> members = new ArrayList<>();
 
     private String id, name;
+
+    public static ArrayList<String> listMemberId = new ArrayList<>();
     @Override
     public FragmentGroupDetailBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentGroupDetailBinding.inflate(inflater, container, false);
@@ -31,6 +34,7 @@ public class GroupDetailFragment extends BaseFragment<FragmentGroupDetailBinding
         super.onViewCreated(view, savedInstanceState);
         id = GroupDetailFragmentArgs.fromBundle(getArguments()).getGroupId();
         name = GroupDetailFragmentArgs.fromBundle(getArguments()).getGroupName();
+        listMemberId.clear();
         initView();
         initViewModel();
 
@@ -39,6 +43,10 @@ public class GroupDetailFragment extends BaseFragment<FragmentGroupDetailBinding
     private void initView() {
         teammateAdapter2 = new TeammateAdapter2(members);
         viewBinding.rvListMember.setAdapter(teammateAdapter2);
+
+        viewBinding.btnTracking.setOnClickListener(v -> {
+            TrackingActivity.start(requireContext());
+        });
     }
 
     private void initViewModel() {
@@ -49,6 +57,10 @@ public class GroupDetailFragment extends BaseFragment<FragmentGroupDetailBinding
             members.clear();
             members.addAll(membersResponse);
             teammateAdapter2.notifyDataSetChanged();
+            listMemberId.clear();
+            for (UserProfileLite userProfileLite : members) {
+                listMemberId.add(userProfileLite.uuid);
+            }
         });
     }
 
