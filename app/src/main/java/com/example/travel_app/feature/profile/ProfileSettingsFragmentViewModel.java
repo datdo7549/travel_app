@@ -6,9 +6,12 @@ import static com.example.travel_app.feature.profile.model.UserState.USER_LOG_OU
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.travel_app.core.Const;
 import com.example.travel_app.core.platform.BaseViewModel;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -30,6 +33,7 @@ public class ProfileSettingsFragmentViewModel extends BaseViewModel {
     }
 
     public void logout() {
+        FirebaseDatabase.getInstance().getReference().child(Const.USER_ONLINE).child(Objects.requireNonNull(userProfile).uuid).removeValue();
         firebaseAuth.signOut();
         FirebaseDatabase.getInstance().getReference("LatLong").child(userProfile.uuid).removeValue();
     }

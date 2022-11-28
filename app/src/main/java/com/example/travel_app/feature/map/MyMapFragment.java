@@ -1,5 +1,6 @@
 package com.example.travel_app.feature.map;
 
+import static com.example.travel_app.feature.explore.ExploreFragment.userProfile;
 import static com.example.travel_app.feature.groups.GroupDetailFragment.listMemberId;
 
 import android.content.pm.PackageManager;
@@ -150,6 +151,16 @@ public class MyMapFragment extends SupportMapFragment implements OnMapReadyCallb
                             // Clear previously click position.
                             googleMap.clear();
                             googleMap.addMarker(markerOptions);
+
+
+                            MyLatLong myLatLong = new MyLatLong();
+                            myLatLong.uuid = userProfile.uuid;
+                            myLatLong.name = userProfile.name;
+                            myLatLong.lat = task.getResult().getLatitude();
+                            myLatLong.longitude = task.getResult().getLongitude();
+
+                            FirebaseDatabase.getInstance().getReference("LatLong").child(userProfile.uuid).setValue(myLatLong);
+
                         }
                     } else {
                         LatLng vietnam = new LatLng(14.0583, 108.2772);
