@@ -31,6 +31,23 @@ public class ExploreFragmentViewModel extends BaseViewModel {
     private final MutableLiveData<UserPost> _likePostResponse = new MutableLiveData<>();
     public LiveData<UserPost> likePostResponse = _likePostResponse;
 
+
+    private final MutableLiveData<Boolean> _isHide = new MutableLiveData<>();
+    public LiveData<Boolean> isHide = _isHide;
+
+    public boolean isHavePost = false;
+    public boolean isHaveUserProfile = false;
+
+    public void setIsHavePost() {
+        isHavePost = true;
+        _isHide.postValue(isHavePost && isHaveUserProfile);
+    }
+
+    public void setIsHaveUserProfile() {
+        isHaveUserProfile = true;
+        _isHide.postValue(isHavePost && isHaveUserProfile);
+    }
+
     @Inject
     public ExploreFragmentViewModel() {
     }
