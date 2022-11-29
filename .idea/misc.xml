@@ -17,6 +17,7 @@
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/bg_selection_favorite.xml" value="0.236" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/bg_selection_favorite_2.xml" value="0.1525" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/bg_white_round_top_25.xml" value="0.1525" />
+        <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/bg_white_round_top_25_corner.xml" value="0.1465" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/bottom_nav_color.xml" value="0.204" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/custom_background_item_message_left.xml" value="0.1525" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/drawable/custom_background_item_message_right.xml" value="0.1525" />
@@ -33,6 +34,7 @@
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/comment_bottom_sheet_layout.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_chat.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_explore.xml" value="0.2421875" />
+        <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_find_friend.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_friends.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_group.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_group_detail.xml" value="0.2421875" />
@@ -44,6 +46,7 @@
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/fragment_update_profile.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/item_comment_layout.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/item_friend_layout.xml" value="0.2421875" />
+        <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/item_liked_layout.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/item_message_left.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/item_message_right.xml" value="0.2421875" />
         <entry key="..\:/Users/Dat Do/TravelAppGitHub/travel_app/app/src/main/res/layout/item_post_layout.xml" value="0.264" />

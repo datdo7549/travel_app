@@ -1,5 +1,7 @@
 package com.example.travel_app.feature.profile;
 
+import static com.example.travel_app.feature.explore.ExploreFragment.userProfile;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,11 @@ import com.bumptech.glide.Glide;
 import com.example.travel_app.R;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentProfileBinding;
+import com.example.travel_app.feature.model.UserPost;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -36,6 +43,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         initViewModel();
     }
 
+    int post_count = 0;
+
     private void initView() {
         Glide.with(this)
                 .load(getResources().getString(R.string.img_cover_sample))
@@ -48,6 +57,28 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
                 .into(viewBinding.imgAvatar);
 
         viewBinding.btnSettings.setOnClickListener(v -> navController.navigate(R.id.action_profileFragment_to_profileSettingsFragment));
+        FirebaseDatabase.getInstance().getReference("UserPosts").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                post_count = 0;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        UserPost user = postSnapshot.getValue(UserPost.class);
+                        if (user.getUid().equals(userProfile.uuid)) {
+                            post_count++;
+                        }
+                    }
+                    viewBinding.userPostsCount.setText(post_count + "");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        viewBinding.userFriendsCount.setText(userProfile.friends.size() + "");
     }
 
     private void initViewModel() {

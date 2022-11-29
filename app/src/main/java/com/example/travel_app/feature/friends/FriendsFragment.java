@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.travel_app.R;
 import com.example.travel_app.core.platform.BaseFragment;
 import com.example.travel_app.databinding.FragmentFriendsBinding;
 import com.example.travel_app.feature.groups.adapter.TeammateAdapter;
@@ -46,6 +47,10 @@ public class FriendsFragment extends BaseFragment<FragmentFriendsBinding, Friend
             controller.navigate(action);
         });
         viewBinding.rvListTeammate.setAdapter(teammateAdapter);
+
+        viewBinding.btnSearch.setOnClickListener(v -> {
+            controller.navigate(R.id.action_friendsFragment_to_findFriendFragment);
+        });
     }
 
     private void initViewModel() {

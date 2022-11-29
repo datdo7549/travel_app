@@ -3,6 +3,9 @@ package com.example.travel_app.feature.explore;
 import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +47,9 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
 
     private ProgressDialog dialog;
 
+    private Handler handler = new Handler();
+
+
     @Override
     public FragmentExploreBinding onCreateViewBinding(LayoutInflater inflater, ViewGroup container) {
         return FragmentExploreBinding.inflate(inflater, container, false);
@@ -53,9 +59,18 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+        handler = new Handler(Looper.getMainLooper());
         initView();
         initViewModel();
     }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            getDeviceLocation();
+            handler.postDelayed(this, 10000);
+        }
+    };
 
     @Override
     public void onStart() {
@@ -122,36 +137,36 @@ public class ExploreFragment extends BaseFragment<FragmentExploreBinding, Explor
             if (isHide) {
                 getDeviceLocation();
                 dialog.dismiss();
+                handler.postDelayed(runnable, 1000);
+
             }
         });
 
     }
 
     private void getDeviceLocation() {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
-         */
-        try {
-            Task<Location> locationResult = LocationServices.getFusedLocationProviderClient(requireContext()).getLastLocation();
-            locationResult.addOnCompleteListener(requireActivity(), task -> {
-                if (task.isSuccessful()) {
-                    // Set the map's camera position to the current location of the device.
-                    if (task.getResult() != null) {
-                        MyLatLong myLatLong = new MyLatLong();
-                        myLatLong.uuid = userProfile.uuid;
-                        myLatLong.name = userProfile.name;
-                        myLatLong.lat = task.getResult().getLatitude();
-                        myLatLong.longitude = task.getResult().getLongitude();
+        if (isAdded()) {
+            try {
+                Task<Location> locationResult = LocationServices.getFusedLocationProviderClient(requireContext()).getLastLocation();
+                locationResult.addOnCompleteListener(requireActivity(), task -> {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        if (task.getResult() != null) {
+                            MyLatLong myLatLong = new MyLatLong();
+                            myLatLong.uuid = userProfile.uuid;
+                            myLatLong.name = userProfile.name;
+                            myLatLong.lat = task.getResult().getLatitude();
+                            myLatLong.longitude = task.getResult().getLongitude();
 
-                        FirebaseDatabase.getInstance().getReference("LatLong").child(userProfile.uuid).setValue(myLatLong);
+                            FirebaseDatabase.getInstance().getReference("LatLong").child(userProfile.uuid).setValue(myLatLong);
+                        }
+                    } else {
+                        LatLng vietnam = new LatLng(14.0583, 108.2772);
                     }
-                } else {
-                    LatLng vietnam = new LatLng(14.0583, 108.2772);
-                }
-            });
-        } catch (SecurityException e)  {
-            Log.e("Exception: %s", e.getMessage(), e);
+                });
+            } catch (SecurityException e) {
+                Log.e("Exception: %s", e.getMessage(), e);
+            }
         }
     }
 }
