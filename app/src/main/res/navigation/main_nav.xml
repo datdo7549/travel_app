@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_friendsFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_friendsFragment_to_findFriendFragment"
+            app:destination="@id/findFriendFragment" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -94,5 +97,10 @@
             app:argType="string"
             android:defaultValue=""/>
     </fragment>
+    <fragment
+        android:id="@+id/findFriendFragment"
+        android:name="com.example.travel_app.feature.add_friends.FindFriendFragment"
+        android:label="fragment_find_friend"
+        tools:layout="@layout/fragment_find_friend" />
 
 </navigation>

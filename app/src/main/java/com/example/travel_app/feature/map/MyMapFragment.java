@@ -147,7 +147,20 @@ public class MyMapFragment extends SupportMapFragment implements OnMapReadyCallb
                             MarkerOptions markerOptions = new MarkerOptions();
                             markerOptions.position(new LatLng(task.getResult().getLatitude(),
                                     task.getResult().getLongitude()));
-                            markerOptions.title("Your location");
+
+                            List<Address> addresses = new ArrayList<>();
+                            try {
+                                addresses = new Geocoder(requireContext(), Locale.getDefault()).getFromLocation(task.getResult().getLatitude(), task.getResult().getLongitude(),1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            android.location.Address address = addresses.get(0);
+                            fnAddress = address.getSubThoroughfare() + " " + address.getThoroughfare() + ", " + address.getSubAdminArea() + ", " + address.getAdminArea();
+                            markerOptions.title(fnAddress);
+
+                            //markerOptions.title("Your location");
                             // Clear previously click position.
                             googleMap.clear();
                             googleMap.addMarker(markerOptions);
